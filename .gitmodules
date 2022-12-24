@@ -1,0 +1,3 @@
+[submodule "libnest2d"]
+	path = libnest2d
+	url = https://github.com/tamasmeszaros/libnest2d.git
