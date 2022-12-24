@@ -1,3 +1,6 @@
 [submodule "libnest2d"]
 	path = libnest2d
 	url = https://github.com/tamasmeszaros/libnest2d.git
+[submodule "pybind11"]
+	path = pybind11
+	url = https://github.com/pybind/pybind11.git
