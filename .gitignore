@@ -1,2 +1,9 @@
 build/
 c_cpp_properties.json
+__pycache__
+*.so
+*.egg-info
+.python-version
+poetry.lock
+*.pyc
+.DS_Store

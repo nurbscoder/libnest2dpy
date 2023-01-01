@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "libnest2dpy"
+version = "1.0.0"
+description = "Python wrapper for 2D irregular bin packaging and nesting library"
+license = "LGPL-3.0-only"
+authors = [
+    "Markus Frings <markusf@moduleworks.com>",
+]
+readme = "README.md"
+keywords = [
+    "nesting",
+    "2d bin packing",
+    "slicing",
+    "3d printing",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Other Environment",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Manufacturing",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: Unix",
+    "Operating System :: MacOS",
+    "Programming Language :: C++",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.group.dev.dependencies]
+yapf = "^0.32.0"
+
+[tool.poetry.build]
+script = "build.py"
+
+[tool.yapf]
+based_on_style = "google"
+
+[build-system]
+requires = [
+    "poetry-core>=1.0.0",
+    "setuptools~=50.3.2",
+    "pybind11",
+]
+build-backend = "poetry.core.masonry.api"
