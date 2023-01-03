@@ -49,13 +49,11 @@ class ExtensionBuilder(build_ext):
                 raise RuntimeError("CMake >= 3.4.0 is required")
 
     def build_cmake_extension(self, ext: CMakeExtension) -> None:
-        extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
-        cmake_args = ["-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=" + extdir, "-DPYTHON_EXECUTABLE=" + sys.executable]
+        cmake_args = ["-DPYTHON_EXECUTABLE=" + sys.executable]
 
         build_args = ["--config", CFG]
 
         if platform.system() == "Windows":
-            cmake_args += ["-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}".format(CFG.upper(), extdir)]
             if sys.maxsize > 2 ** 32:
                 cmake_args += ["-A", "x64"]
             build_args += ["--", "/m"]
