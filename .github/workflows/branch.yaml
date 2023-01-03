@@ -23,5 +23,11 @@ jobs:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Install dependencies
         run: poetry install
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: libnest2dpy/*
+          retention-days: 5
       - name: Run tests
         run: poetry run pytest tests
