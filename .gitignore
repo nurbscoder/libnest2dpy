@@ -7,3 +7,4 @@ __pycache__
 poetry.lock
 *.pyc
 .DS_Store
+dist

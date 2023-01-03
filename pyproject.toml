@@ -32,6 +32,7 @@ python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
 yapf = "^0.32.0"
+packaging = "^22.0"
 
 [tool.poetry.build]
 script = "build.py"
@@ -44,5 +45,6 @@ requires = [
     "poetry-core>=1.0.0",
     "setuptools~=50.3.2",
     "pybind11",
+    "packaging",
 ]
 build-backend = "poetry.core.masonry.api"

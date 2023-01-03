@@ -7,10 +7,13 @@ import subprocess
 import sys
 import sysconfig
 from distutils.command.build_ext import build_ext
-from distutils.version import LooseVersion
+from packaging.version import Version
 from typing import Any
+import re
 
 from setuptools import Extension
+
+CFG = "Release"
 
 
 class CMakeExtension(Extension):
@@ -41,26 +44,23 @@ class ExtensionBuilder(build_ext):
                     "CMake must be installed to build the following extensions: "
                     + ", ".join(e.name for e in cmake_extensions)
                 )
-            if platform.system() == "Windows":
-                cmake_version = LooseVersion(re.search(r"version\s*([\d.]+)", out.decode()).group(1))  # type: ignore
-                if cmake_version < "3.4.0":
-                    raise RuntimeError("CMake >= 3.4.0 is required on Windows")
+            cmake_version = Version(re.search(r"version\s*([\d.]+)", out.decode()).group(1))  # type: ignore
+            if cmake_version < Version("3.4.0"):
+                raise RuntimeError("CMake >= 3.4.0 is required")
 
     def build_cmake_extension(self, ext: CMakeExtension) -> None:
         extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
         cmake_args = ["-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=" + extdir, "-DPYTHON_EXECUTABLE=" + sys.executable]
 
-        cfg = "Debug" if self.debug else "Release"
-        # cfg = 'Debug'
-        build_args = ["--config", cfg]
+        build_args = ["--config", CFG]
 
         if platform.system() == "Windows":
-            cmake_args += ["-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}".format(cfg.upper(), extdir)]
+            cmake_args += ["-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}".format(CFG.upper(), extdir)]
             if sys.maxsize > 2 ** 32:
                 cmake_args += ["-A", "x64"]
             build_args += ["--", "/m"]
         else:
-            cmake_args += ["-DCMAKE_BUILD_TYPE=" + cfg]
+            cmake_args += ["-DCMAKE_BUILD_TYPE=" + CFG]
             build_args += ["--", "-j4"]
         cmake_args += ["-DPYTHON_INCLUDE_DIR={}".format(sysconfig.get_path("include"))]
         cmake_args += ["-DRP_ENABLE_DOWNLOADING=ON"]
@@ -74,7 +74,7 @@ class ExtensionBuilder(build_ext):
         subprocess.check_call(["cmake", "--build", "."] + build_args, cwd=self.build_temp)
 
 def build(setup_kwargs: dict[str, Any]) -> None:
-    cmake_modules = [CMakeExtension("libnest2dpy", sourcedir=str(pathlib.Path(__file__).parent.resolve()))]
+    cmake_modules = [CMakeExtension("_libnest2dpy", sourcedir=str(pathlib.Path(__file__).parent.resolve()))]
 
     setup_kwargs.update(
         {

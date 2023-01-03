@@ -5,8 +5,5 @@
     },
     "python.formatting.provider": "yapf",
     "editor.formatOnSave": true,
-    "isort.check": true,
-    "files.associations": {
-        "*.yaml": "home-assistant"
-    }
+    "isort.check": true
 }
