@@ -1,9 +1,3 @@
 {
-    "cmake.configureSettings": {
-        "RP_ENABLE_DOWNLOADING": true,
-        "LIBNEST2D_HEADER_ONLY": false
-    },
-    "python.formatting.provider": "yapf",
-    "editor.formatOnSave": true,
-    "isort.check": true
+    "cmake.configureOnOpen": false
 }
