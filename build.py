@@ -51,6 +51,8 @@ class ExtensionBuilder(build_ext):
     def build_cmake_extension(self, ext: CMakeExtension) -> None:
         cmake_args = ["-DPYTHON_EXECUTABLE=" + sys.executable]
 
+        build_folder = (pathlib.Path(__file__).parent / "build").resolve()
+
         build_args = ["--config", CFG]
 
         if platform.system() == "Windows":
@@ -65,11 +67,15 @@ class ExtensionBuilder(build_ext):
         cmake_args += ["-DLIBNEST2D_HEADER_ONLY=OFF"]
 
         env = os.environ.copy()
-        env["CXXFLAGS"] = '{} -DVERSION_INFO=\\"{}\\"'.format(env.get("CXXFLAGS", ""), self.distribution.get_version())
-        if not os.path.exists(self.build_temp):
-            os.makedirs(self.build_temp)
-        subprocess.check_call(["cmake", ext.sourcedir] + cmake_args, cwd=self.build_temp, env=env)
-        subprocess.check_call(["cmake", "--build", "."] + build_args, cwd=self.build_temp)
+        env["CXXFLAGS"] = '{} -DVERSION_INFO=\\"{}\\"'.format(
+            env.get("CXXFLAGS", ""), self.distribution.get_version())
+        if not os.path.exists(build_folder):
+            os.makedirs(build_folder)
+        subprocess.check_call(["cmake", ext.sourcedir] +
+                              cmake_args, cwd=build_folder, env=env)
+        subprocess.check_call(["cmake", "--build", "."] +
+                              build_args, cwd=build_folder)
+
 
 def build(setup_kwargs: dict[str, Any]) -> None:
     cmake_modules = [CMakeExtension("_libnest2dpy", sourcedir=str(pathlib.Path(__file__).parent.resolve()))]
