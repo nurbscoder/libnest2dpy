@@ -4,7 +4,7 @@ project(libnest2dpy LANGUAGES CXX)
 add_subdirectory(third_party/libnest2d)
 add_subdirectory(third_party/pybind11)
 
-pybind11_add_module(libnest2dpy src/libnest2dpy.cpp)
+pybind11_add_module(libnest2dpy src/libnest2dpy.cpp src/bind_degrees.cpp src/bind_double.cpp)
 
 set_target_properties(
   libnest2dpy
@@ -22,5 +22,9 @@ set_target_properties(
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_link_options(libnest2dpy PUBLIC -Wl,--disable-new-dtags)
 endif()
+
+target_include_directories(libnest2dpy
+                           PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(libnest2dpy PRIVATE cxx_std_17)
 
 target_link_libraries(libnest2dpy PUBLIC libnest2d)
