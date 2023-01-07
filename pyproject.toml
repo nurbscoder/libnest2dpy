@@ -34,6 +34,7 @@ python = "^3.7"
 yapf = "^0.32.0"
 packaging = "^22.0"
 pytest = "^7.2.0"
+mypy = "^0.991"
 
 [tool.poetry.build]
 script = "build.py"
