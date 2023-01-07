@@ -19,9 +19,10 @@ CFG = "Release"
 class CMakeExtension(Extension):
     name: str
 
-    def __init__(self, name: str, sourcedir: str="") -> None:
+    def __init__(self, name: str, sourcedir: str = "") -> None:
         super().__init__(name, sources=[])
         self.sourcedir = os.path.abspath(sourcedir)
+
 
 class ExtensionBuilder(build_ext):
     def run(self) -> None:
@@ -35,7 +36,8 @@ class ExtensionBuilder(build_ext):
             super().build_extension(ext)
 
     def validate_cmake(self) -> None:
-        cmake_extensions = [x for x in self.extensions if isinstance(x, CMakeExtension)]
+        cmake_extensions = [
+            x for x in self.extensions if isinstance(x, CMakeExtension)]
         if len(cmake_extensions) > 0:
             try:
                 out = subprocess.check_output(["cmake", "--version"])
@@ -44,7 +46,8 @@ class ExtensionBuilder(build_ext):
                     "CMake must be installed to build the following extensions: "
                     + ", ".join(e.name for e in cmake_extensions)
                 )
-            cmake_version = Version(re.search(r"version\s*([\d.]+)", out.decode()).group(1))  # type: ignore
+            cmake_version = Version(
+                re.search(r"version\s*([\d.]+)", out.decode()).group(1))  # type: ignore
             if cmake_version < Version("3.4.0"):
                 raise RuntimeError("CMake >= 3.4.0 is required")
 
@@ -62,9 +65,11 @@ class ExtensionBuilder(build_ext):
         else:
             cmake_args += ["-DCMAKE_BUILD_TYPE=" + CFG]
             build_args += ["--", "-j4"]
-        cmake_args += ["-DPYTHON_INCLUDE_DIR={}".format(sysconfig.get_path("include"))]
+        cmake_args += ["-DPYTHON_INCLUDE_DIR={}".format(
+            sysconfig.get_path("include"))]
         cmake_args += ["-DRP_ENABLE_DOWNLOADING=ON"]
         cmake_args += ["-DLIBNEST2D_HEADER_ONLY=OFF"]
+        cmake_args += ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"]
 
         env = os.environ.copy()
         env["CXXFLAGS"] = '{} -DVERSION_INFO=\\"{}\\"'.format(
@@ -78,7 +83,8 @@ class ExtensionBuilder(build_ext):
 
 
 def build(setup_kwargs: dict[str, Any]) -> None:
-    cmake_modules = [CMakeExtension("_libnest2dpy", sourcedir=str(pathlib.Path(__file__).parent.resolve()))]
+    cmake_modules = [CMakeExtension("_libnest2dpy", sourcedir=str(
+        pathlib.Path(__file__).parent.resolve()))]
 
     setup_kwargs.update(
         {
