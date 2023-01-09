@@ -11,6 +11,7 @@ namespace py = pybind11;
 namespace libnest2dpy {
 using namespace libnest2d;
 void bind_degrees(py::module &m) {
-  py::class_<Degrees, Double>(m, "Degrees").def(py::init<>(), CG_RELEASE);
+  py::class_<Degrees, Double>(m, "Degrees")
+      .def(py::init<Double>(), py::arg("deg") = Double(), CG_RELEASE);
 }
 }  // namespace libnest2dpy
