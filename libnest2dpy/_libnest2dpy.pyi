@@ -1,7 +1,7 @@
 from typing import overload
 
 class Degrees(Double):
-    def __init__(self, *args, **kwargs) -> None: ...
+    def __init__(self, deg: Double = ...) -> None: ...
 
 class Double:
     @overload
