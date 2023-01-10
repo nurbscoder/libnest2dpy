@@ -210,6 +210,23 @@ class PathList:
         ...
 
 
+class Polygon:
+    contour: Path
+    holes: PathList
+
+    @overload
+    def __init__(self) -> None:
+        ...
+
+    @overload
+    def __init__(self, cont: Path, holes: PathList) -> None:
+        ...
+
+    @overload
+    def __init__(self, cont: Path) -> None:
+        ...
+
+
 class Radians:
 
     @overload
