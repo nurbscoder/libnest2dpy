@@ -4,7 +4,7 @@
 
 #include <libnest2d/libnest2d.hpp>
 
-#include "common.hpp"
+#include "libnest2dpy.hpp"
 
 namespace py = pybind11;
 

@@ -5,7 +5,7 @@ add_subdirectory(third_party/libnest2d)
 add_subdirectory(third_party/pybind11)
 
 pybind11_add_module(libnest2dpy src/libnest2dpy.cpp src/bind_degrees.cpp
-                    src/bind_radians.cpp)
+                    src/bind_radians.cpp src/bind_geometries.cpp)
 
 set_target_properties(
   libnest2dpy

@@ -1,6 +1,9 @@
+#include "libnest2dpy.hpp"
+
 #include <pybind11/pybind11.h>
 
 #include "bind_degrees.hpp"
+#include "bind_geometries.hpp"
 #include "bind_radians.hpp"
 
 namespace py = pybind11;
@@ -14,5 +17,6 @@ PYBIND11_MODULE(_libnest2dpy, m) {
 
   bind_degrees(m);
   bind_radians(m);
+  bind_geometries(m);
 }
 }  // namespace libnest2dpy
