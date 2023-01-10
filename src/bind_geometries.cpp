@@ -22,5 +22,6 @@ void bind_geometries(py::module& m) {
       .def(py::self == py::self, CG_RELEASE)
       .def(py::self != py::self, CG_RELEASE);
   py::bind_vector<std::vector<IntPoint>>(m, "Path");
+  py::bind_vector<std::vector<std::vector<IntPoint>>>(m, "PathList");
 }
 }  // namespace libnest2dpy

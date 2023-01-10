@@ -7,6 +7,7 @@
 #include <vector>
 
 PYBIND11_MAKE_OPAQUE(std::vector<ClipperLib::IntPoint>);
+PYBIND11_MAKE_OPAQUE(std::vector<std::vector<ClipperLib::IntPoint>>);
 
 #define CG_RELEASE pybind11::call_guard<pybind11::gil_scoped_release>()
 
